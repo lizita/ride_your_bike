@@ -1,4 +1,39 @@
-{
+/*  SparkFun ACS712 and ACS723 Demo
+    Created by George Beckstein for SparkFun
+    4/30/2017
+    Updated by SFE
+    6/14/2018
+
+    Uses an Arduino to set up the ACS712 and ACS723 Current Sensors
+    See the product page at: https://www.sparkfun.com/products/14544
+
+    Parts you may need:
+    - 100 Ohm, 1/2W or greater resistor OR two 220 Ohm 1/4 resistors in parallel
+    - ACS712 Breakout with on-board amplifier or ACS723 Current Sensor (Low Current)
+
+    Optional equipment:
+    - Oscilloscope
+    - Multimeter (or two)
+    - A power supply with current limiting/constant current would be handy to calibrate the device without using resistors
+*/
+
+const int analogInPin = A0;
+
+// Number of samples to average the reading over
+// Change this to make the reading smoother... but beware of buffer overflows!
+const int avgSamples = 10;
+
+int sensorValue = 0;
+
+float sensitivity = 30.0 / 35.0; //30mA per 50mV = 0.6
+float Vref = 6600; // Output voltage with no current: ~ 2500mV or 2.5V
+
+void setup() {
+  // initialize serial communications at 9600 bps:
+  Serial.begin(9600);
+}
+
+void loop() {
   // read the analog in value:
   for (int i = 0; i < avgSamples; i++)
   {
